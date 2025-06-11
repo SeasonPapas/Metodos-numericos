@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Metodos Numericos</title>
+  <style>
+    /* CSS Variables */
+    :root {
+      --color-bg: #ffffff;
+      --color-text-primary: #111827;
+      --color-text-secondary: #6b7280;
+      --color-accent: #111111;
+      --color-accent-hover: #333333;
+      --color-input-border: #d1d5db;
+      --color-input-bg: #f9fafb;
+      --spacing-xl: 6rem;
+      --spacing-lg: 4rem;
+      --spacing-md: 2rem;
+      --spacing-sm: 1rem;
+      --border-radius: 0.75rem;
+      --shadow-light: 0 2px 8px rgba(0,0,0,0.08);
+      --font-headline: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap');
+
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--color-text-secondary);
+      background-color: var(--color-bg);
+      font-size: 18px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: var(--spacing-md);
+      padding-right: var(--spacing-md);
+      text-align: center;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--color-bg);
+      box-shadow: var(--shadow-light);
+      z-index: 100;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .logo {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--color-accent);
+      user-select: none;
+    }
+    ul.menu {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+    ul.menu li a {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+      padding: 0.5rem 0;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    ul.menu li a:hover,
+    ul.menu li a:focus {
+      color: var(--color-accent-hover);
+      outline: none;
+    }
+    ul.menu li a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background: var(--color-accent-hover);
+      transition: width 0.3s ease;
+    }
+    ul.menu li a:hover::after,
+    ul.menu li a:focus::after,
+    ul.menu li a[aria-current="page"]::after {
+      width: 100%;
+    }
+
+    /* Sections */
+    section {
+      padding-top: var(--spacing-xl);
+      padding-bottom: var(--spacing-xl);
+      min-height: calc(100vh - 72px);
+      display: none;
+      overflow-y: auto;
+      color: var(--color-text-primary);
+    }
+    section.active {
+      display: block;
+    }
+
+    /* Hero Section (Inicio page) */
+    #page-home .hero {
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 2rem;
+      line-height: 1.4;
+      padding: var(--spacing-md);
+    }
+
+    /* General Section Headings */
+    section h2 {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 3rem;
+      margin-bottom: 3rem;
+      color: var(--color-accent);
+    }
+
+    /* Images in sections */
+    section img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-light);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Contact Section Form */
+    form {
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+      color: var(--color-text-primary);
+    }
+    label {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+    }
+    input, textarea {
+      margin-top: 0.25rem;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      color: var(--color-text-primary);
+      border: 1.5px solid var(--color-input-border);
+      border-radius: var(--border-radius);
+      background-color: var(--color-input-bg);
+      font-family: var(--font-body);
+      transition: border-color 0.3s ease;
+      resize: vertical;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 6px rgba(17,17,17, 0.25);
+    }
+    textarea {
+      min-height: 120px;
+    }
+    button.submit-btn {
+      align-self: center;
+      background-color: var(--color-accent);
+      color: var(--color-bg);
+      border: none;
+      padding: 1rem 3rem;
+      font-size: 1.125rem;
+      font-weight: 700;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+      margin-top: var(--spacing-md);
+    }
+    button.submit-btn:hover,
+    button.submit-btn:focus {
+      background-color: var(--color-accent-hover);
+      outline: none;
+      transform: scale(1.05);
+    }
+
+    /* Accessibility focus outline */
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      #page-home .hero {
+        font-size: 1.8rem;
+      }
+      section h2 {
+        font-size: 2.5rem;
+      }
+      nav {
+        height: 64px;
+      }
+      ul.menu {
+        gap: 1.25rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container" aria-label="Primary Navigation">
+      <div class="logo" tabindex="0">Metodos Numericos</div>
+      <ul class="menu" role="menubar">
+        <li role="none"><a href="#" role="menuitem" tabindex="0" id="menu-home">Inicio</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-features">Metodo de biseccion</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-gallery">Metodo Newton-Raphson</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-docs">Metodo de la Secante</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-contact">Metodo Punto Fijo</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-example">Metodo Gauss y Gauss-Jordan</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="page-home" class="active" role="region" aria-labelledby="home-heading">
+      <div class="hero container" tabindex="0">
+        En esta pagina web veremos diferentes tipos de metodos numericos
+      </div>
+    </section>
+
+    <section id="page-features" role="region" aria-labelledby="features-heading">
+      <h2 id="features-heading">Metodo de biseccion</h2>
+      <div class="container">
+        <img src="metodos/Biseccion/ilovepdf_pages-to-jpg (1)/Método de Bisección o intervalo medio_page-0002.jpg"
+          alt="Imagen 1" />
+        <img src="metodos/Biseccion/ilovepdf_pages-to-jpg (1)/Método de Bisección o intervalo medio_page-0003.jpg"
+          alt="Imagen 2" />
+        <img src="metodos/Biseccion/ilovepdf_pages-to-jpg (1)/Método de Bisección o intervalo medio_page-0004.jpg"
+          alt="Imagen 3" />
+        <img src="metodos/Biseccion/ilovepdf_pages-to-jpg (1)/Método de Bisección o intervalo medio_page-0005.jpg"
+          alt="Imagen 4" />
+        <img src="metodos/Biseccion/ilovepdf_pages-to-jpg (1)/Método de Bisección o intervalo medio_page-0006.jpg"
+          alt="Imagen 5" />
+        <img src="metodos/Biseccion/ilovepdf_pages-to-jpg (1)/Método de Bisección o intervalo medio_page-0007.jpg"
+          alt="Imagen 6" />
+        <img src="metodos/Biseccion/ilovepdf_pages-to-jpg (1)/Método de Bisección o intervalo medio_page-0008.jpg"
+          alt="Imagen 7" />
+        <img src="metodos/Biseccion/ilovepdf_pages-to-jpg (1)/Método de Bisección o intervalo medio_page-0009.jpg"
+          alt="Imagen 8" />
+      </div>
+    </section>
+
+    <section id="page-gallery" role="region" aria-labelledby="gallery-heading">
+      <h2 id="gallery-heading">Metodo Newton-Raphson</h2>
+      <div class="container">
+        <img src="metodos/Newton/ilovepdf_pages-to-jpg (1)/Método Newton - Raphson_page-0002.jpg"
+          alt="Imagen 1" />
+        <img src="metodos/Newton/ilovepdf_pages-to-jpg (1)/Método Newton - Raphson_page-0003.jpg"
+          alt="Imagen 2" />
+        <img src="metodos/Newton/ilovepdf_pages-to-jpg (1)/Método Newton - Raphson_page-0004.jpg"
+          alt="Imagen 3" />
+        <img src="metodos/Newton/ilovepdf_pages-to-jpg (1)/Método Newton - Raphson_page-0005.jpg"
+          alt="Imagen 4" />
+        <img src="metodos/Newton/ilovepdf_pages-to-jpg (1)/Método Newton - Raphson_page-0006.jpg"
+          alt="Imagen 5" />
+      </div>
+    </section>
+
+    <section id="page-docs" role="region" aria-labelledby="docs-heading">
+      <h2 id="docs-heading">Metodo de la Secante</h2>
+      <div class="container">
+        <img src="metodos/Secante/ilovepdf_pages-to-jpg (4)/Método de la Secante_page-0002.jpg"
+          alt="Imagen 1" />
+        <img src="metodos/Secante/ilovepdf_pages-to-jpg (4)/Método de la Secante_page-0003.jpg"
+          alt="Imagen 2" />
+        <img src="metodos/Secante/ilovepdf_pages-to-jpg (4)/Método de la Secante_page-0004.jpg"
+          alt="Imagen 3" />
+        <img src="metodos/Secante/ilovepdf_pages-to-jpg (4)/Método de la Secante_page-0005.jpg"
+          alt="Imagen 4" />
+        <img src="metodos/Secante/ilovepdf_pages-to-jpg (4)/Método de la Secante_page-0006.jpg"
+          alt="Imagen 5" />
+        <img src="metodos/Secante/ilovepdf_pages-to-jpg (4)/Método de la Secante_page-0007.jpg"
+          alt="Imagen 6" />
+      </div>
+    </section>
+
+    <section id="page-contact" role="region" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Metodo Punto Fijo</h2>
+      <div class="container">
+        <img src="metodos/Puntofijo/ilovepdf_pages-to-jpg (3)/Método de Punto Fijo_page-0002.jpg"
+          alt="Imagen 1" />
+        <img src="metodos/Puntofijo/ilovepdf_pages-to-jpg (3)/Método de Punto Fijo_page-0003.jpg"
+          alt="Imagen 2" />
+        <img src="metodos/Puntofijo/ilovepdf_pages-to-jpg (3)/Método de Punto Fijo_page-0004.jpg"
+          alt="Imagen 3" />
+        <img src="metodos/Puntofijo/ilovepdf_pages-to-jpg (3)/Método de Punto Fijo_page-0005.jpg"
+          alt="Imagen 4" />
+        <img src="metodos/Puntofijo/ilovepdf_pages-to-jpg (3)/Método de Punto Fijo_page-0006.jpg"
+          alt="Imagen 5" />
+        <img src="metodos/Puntofijo/ilovepdf_pages-to-jpg (3)/Método de Punto Fijo_page-0007.jpg"
+          alt="Imagen 6" />
+        <img src="metodos/Puntofijo/ilovepdf_pages-to-jpg (3)/Método de Punto Fijo_page-0008.jpg"
+          alt="Imagen 7" />
+        <img src="metodos/Puntofijo/ilovepdf_pages-to-jpg (3)/Método de Punto Fijo_page-0009.jpg"
+          alt="Imagen 8" />
+        <img src="metodos/Puntofijo/ilovepdf_pages-to-jpg (3)/Método de Punto Fijo_page-0010.jpg"
+          alt="Imagen 9" />
+      </div>
+    </section>
+
+    <section id="page-example" role="region" aria-labelledby="example-heading">
+      <h2 id="example-heading">Metodo Gauss y Gauss-Jordan</h2>
+      <div class="container">
+        <img src="metodos/Gauss/ilovepdf_pages-to-jpg (2)/Método de Gauss y Gauss Jordan._page-0002.jpg"
+          alt="Imagen 1" />
+        <img src="metodos/Gauss/ilovepdf_pages-to-jpg (2)/Método de Gauss y Gauss Jordan._page-0003.jpg"
+          alt="Imagen 2" />
+        <img src="metodos/Gauss/ilovepdf_pages-to-jpg (2)/Método de Gauss y Gauss Jordan._page-0004.jpg"
+          alt="Imagen 3" />
+        <img src="metodos/Gauss/ilovepdf_pages-to-jpg (2)/Método de Gauss y Gauss Jordan._page-0005.jpg"
+          alt="Imagen 4" />
+        <img src="metodos/Gauss/ilovepdf_pages-to-jpg (2)/Método de Gauss y Gauss Jordan._page-0006.jpg"
+          alt="Imagen 5" />
+        <img src="metodos/Gauss/ilovepdf_pages-to-jpg (2)/Método de Gauss y Gauss Jordan._page-0007.jpg"
+          alt="Imagen 6" />
+        <img src="metodos/Gauss/ilovepdf_pages-to-jpg (2)/Método de Gauss y Gauss Jordan._page-0008.jpg"
+          alt="Imagen 7" />
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const pages = ['home', 'features', 'gallery', 'docs', 'contact', 'example'];
+
+      // Cache DOM elements
+      const sections = {};
+      const menuLinks = {};
+
+      pages.forEach(page => {
+        sections[page] = document.getElementById(`page-${page}`);
+        menuLinks[page] = document.getElementById(`menu-${page}`);
+      });
+
+      function showPage(pageToShow) {
+        pages.forEach(page => {
+          if (page === pageToShow) {
+            sections[page].classList.add('active');
+            menuLinks[page].tabIndex = 0;
+            menuLinks[page].setAttribute('aria-current', 'page');
+            // For accessibility, focus main heading or container of the active section
+            const focusTarget = sections[page].querySelector('h1, h2, .hero, img, form, .gallery-placeholder');
+            if (focusTarget) focusTarget.focus();
+          } else {
+            sections[page].classList.remove('active');
+            menuLinks[page].tabIndex = -1;
+            menuLinks[page].removeAttribute('aria-current');
+          }
+        });
+      }
+
+      // Event Listeners on menu items
+      pages.forEach(page => {
+        menuLinks[page].addEventListener('click', e => {
+          e.preventDefault();
+          showPage(page);
+        });
+      });
+
+      // Initialize showing home page
+      showPage('home');
+    })();
+  </script>
+</body>
+</html>
