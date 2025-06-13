@@ -23,14 +23,12 @@
       --font-headline: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
-
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap');
 
     /* Reset and base */
     *, *::before, *::after {
       box-sizing: border-box;
     }
-
     body {
       margin: 0;
       font-family: var(--font-body);
@@ -41,13 +39,11 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-
     a {
       color: inherit;
       text-decoration: none;
       cursor: pointer;
     }
-
     /* Container */
     .container {
       max-width: 1200px;
@@ -57,7 +53,6 @@
       padding-right: var(--spacing-md);
       text-align: center;
     }
-
     /* Header */
     header {
       position: sticky;
@@ -118,7 +113,6 @@
     ul.menu li a[aria-current="true"]::after {
       width: 100%;
     }
-
     /* Sections */
     section {
       padding-top: var(--spacing-xl);
@@ -131,20 +125,36 @@
     section.active {
       display: block;
     }
-
     /* Hero Section (Inicio page) */
-    #page-home .hero {
+    #page-home {
+      font-family: var(--font-headline);
+      color: var(--color-accent);
       max-width: 700px;
       margin-left: auto;
       margin-right: auto;
-      font-family: var(--font-headline);
-      font-weight: 600;
-      font-size: 2rem;
-      line-height: 1.4;
       padding: var(--spacing-md);
-      color: var(--color-accent);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
-
+    #page-home h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    #page-home h2 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--color-text-secondary);
+    }
+    #page-home p {
+      font-size: 1.25rem;
+      font-weight: 400;
+      margin: 0;
+      color: var(--color-text-primary);
+    }
     /* General Section Headings */
     section h2 {
       font-family: var(--font-headline);
@@ -153,7 +163,6 @@
       margin-bottom: 3rem;
       color: var(--color-accent);
     }
-
     /* Images in sections */
     section img {
       max-width: 100%;
@@ -165,8 +174,7 @@
       margin-right: auto;
       margin-bottom: 2rem;
     }
-
-    /* Buttons inside Parcial sections for methods */
+    /* Buttons */
     .method-buttons {
       display: flex;
       flex-wrap: wrap;
@@ -194,17 +202,24 @@
       outline: none;
       transform: scale(1.05);
     }
-
     /* Accessibility focus outline */
     a:focus-visible, button:focus-visible {
       outline: 2px solid var(--color-accent);
       outline-offset: 2px;
     }
-
     /* Responsive */
     @media (max-width: 640px) {
-      #page-home .hero {
+      #page-home {
         font-size: 1.8rem;
+      }
+      #page-home h1 {
+        font-size: 2.8rem;
+      }
+      #page-home h2 {
+        font-size: 1.8rem;
+      }
+      #page-home p {
+        font-size: 1rem;
       }
       section h2 {
         font-size: 2.5rem;
@@ -232,20 +247,32 @@
       <div class="logo" tabindex="0">Metodos Numericos</div>
       <ul class="menu" role="menubar">
         <li role="none"><a href="#" role="menuitem" tabindex="0" id="menu-home" aria-current="true">Inicio</a></li>
-        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-parcial1">Parcial 1</a></li>
-        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-parcial2">Parcial 2</a></li>
-        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-parcial3">Parcial 3</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-parciales">Parciales</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
+    <!-- Home with new text -->
     <section id="page-home" class="active" role="region" aria-labelledby="home-heading" tabindex="0">
       <div class="hero container">
-        En esta pagina web veremos diferentes tipos de metodos numericos
+        <h1>Metodos Numericos</h1>
+        <h2>Integradora</h2>
+        <p>Julio Hernando Avila Rios 747597</p>
       </div>
     </section>
 
+    <!-- Parciales selector -->
+    <section id="page-parciales" role="region" aria-labelledby="parciales-heading" tabindex="0">
+      <h2 id="parciales-heading">Parciales</h2>
+      <div class="container method-buttons" role="group" aria-label="Parciales selection">
+        <button type="button" data-target="page-parcial1">Parcial 1</button>
+        <button type="button" data-target="page-parcial2">Parcial 2</button>
+        <button type="button" data-target="page-parcial3">Parcial 3</button>
+      </div>
+    </section>
+
+    <!-- Parcial 1 -->
     <section id="page-parcial1" role="region" aria-labelledby="parcial1-heading" tabindex="0">
       <h2 id="parcial1-heading">Parcial 1</h2>
       <div class="container method-buttons" role="group" aria-label="Numerical methods in Parcial 1">
@@ -254,9 +281,11 @@
         <button type="button" data-target="page-docs">Metodo de la Secante</button>
         <button type="button" data-target="page-contact">Metodo Punto Fijo</button>
         <button type="button" data-target="page-example">Metodo Gauss y Gauss-Jordan</button>
+        <button type="button" data-target="page-parciales">Volver a Parciales</button>
       </div>
     </section>
 
+    <!-- Parcial 2 -->
     <section id="page-parcial2" role="region" aria-labelledby="parcial2-heading" tabindex="0">
       <h2 id="parcial2-heading">Parcial 2</h2>
       <div class="container method-buttons" role="group" aria-label="Numerical methods in Parcial 2">
@@ -265,6 +294,7 @@
         <button type="button" data-target="page-parcial2-metodo3">Metodo 3 Parcial 2</button>
         <button type="button" data-target="page-parcial2-metodo4">Metodo 4 Parcial 2</button>
         <button type="button" data-target="page-parcial2-metodo5">Metodo 5 Parcial 2</button>
+        <button type="button" data-target="page-parciales">Volver a Parciales</button>
       </div>
     </section>
 
@@ -274,28 +304,24 @@
         <p>Contenido del Metodo 1 para Parcial 2 será añadido aquí.</p>
       </div>
     </section>
-
     <section id="page-parcial2-metodo2" role="region" aria-labelledby="parcial2-metodo2-heading" tabindex="0">
       <h2 id="parcial2-metodo2-heading">Metodo 2 Parcial 2 - Contenido pendiente</h2>
       <div class="container">
         <p>Contenido del Metodo 2 para Parcial 2 será añadido aquí.</p>
       </div>
     </section>
-
     <section id="page-parcial2-metodo3" role="region" aria-labelledby="parcial2-metodo3-heading" tabindex="0">
       <h2 id="parcial2-metodo3-heading">Metodo 3 Parcial 2 - Contenido pendiente</h2>
       <div class="container">
         <p>Contenido del Metodo 3 para Parcial 2 será añadido aquí.</p>
       </div>
     </section>
-
     <section id="page-parcial2-metodo4" role="region" aria-labelledby="parcial2-metodo4-heading" tabindex="0">
       <h2 id="parcial2-metodo4-heading">Metodo 4 Parcial 2 - Contenido pendiente</h2>
       <div class="container">
         <p>Contenido del Metodo 4 para Parcial 2 será añadido aquí.</p>
       </div>
     </section>
-
     <section id="page-parcial2-metodo5" role="region" aria-labelledby="parcial2-metodo5-heading" tabindex="0">
       <h2 id="parcial2-metodo5-heading">Metodo 5 Parcial 2 - Contenido pendiente</h2>
       <div class="container">
@@ -303,6 +329,7 @@
       </div>
     </section>
 
+    <!-- Parcial 3 -->
     <section id="page-parcial3" role="region" aria-labelledby="parcial3-heading" tabindex="0">
       <h2 id="parcial3-heading">Parcial 3</h2>
       <div class="container method-buttons" role="group" aria-label="Numerical methods in Parcial 3">
@@ -311,37 +338,33 @@
         <button type="button" data-target="page-parcial3-metodo3">Metodo 3 Parcial 3</button>
         <button type="button" data-target="page-parcial3-metodo4">Metodo 4 Parcial 3</button>
         <button type="button" data-target="page-parcial3-metodo5">Metodo 5 Parcial 3</button>
+        <button type="button" data-target="page-parciales">Volver a Parciales</button>
       </div>
     </section>
-
     <section id="page-parcial3-metodo1" role="region" aria-labelledby="parcial3-metodo1-heading" tabindex="0">
       <h2 id="parcial3-metodo1-heading">Metodo 1 Parcial 3 - Contenido pendiente</h2>
       <div class="container">
         <p>Contenido del Metodo 1 para Parcial 3 será añadido aquí.</p>
       </div>
     </section>
-
     <section id="page-parcial3-metodo2" role="region" aria-labelledby="parcial3-metodo2-heading" tabindex="0">
       <h2 id="parcial3-metodo2-heading">Metodo 2 Parcial 3 - Contenido pendiente</h2>
       <div class="container">
         <p>Contenido del Metodo 2 para Parcial 3 será añadido aquí.</p>
       </div>
     </section>
-
     <section id="page-parcial3-metodo3" role="region" aria-labelledby="parcial3-metodo3-heading" tabindex="0">
       <h2 id="parcial3-metodo3-heading">Metodo 3 Parcial 3 - Contenido pendiente</h2>
       <div class="container">
         <p>Contenido del Metodo 3 para Parcial 3 será añadido aquí.</p>
       </div>
     </section>
-
     <section id="page-parcial3-metodo4" role="region" aria-labelledby="parcial3-metodo4-heading" tabindex="0">
       <h2 id="parcial3-metodo4-heading">Metodo 4 Parcial 3 - Contenido pendiente</h2>
       <div class="container">
         <p>Contenido del Metodo 4 para Parcial 3 será añadido aquí.</p>
       </div>
     </section>
-
     <section id="page-parcial3-metodo5" role="region" aria-labelledby="parcial3-metodo5-heading" tabindex="0">
       <h2 id="parcial3-metodo5-heading">Metodo 5 Parcial 3 - Contenido pendiente</h2>
       <div class="container">
@@ -349,10 +372,10 @@
       </div>
     </section>
 
-    <!-- Existing Metodo sections from Parcial 1 -->
+    <!-- Parcial 1 methods from before -->
     <section id="page-features" role="region" aria-labelledby="features-heading" tabindex="0">
       <h2 id="features-heading">Metodo de biseccion</h2>
-     <div class="container">
+      <div class="container">
         <img src="Método de Bisección o intervalo medio_page-0002.jpg"
         alt="Imagen 1" />
         <img src="Método de Bisección o intervalo medio_page-0003.jpg"
@@ -371,7 +394,6 @@
           alt="Imagen 8" />
       </div>
     </section>
-
     <section id="page-gallery" role="region" aria-labelledby="gallery-heading" tabindex="0">
       <h2 id="gallery-heading">Metodo Newton-Raphson</h2>
       <div class="container">
@@ -387,7 +409,6 @@
           alt="Imagen 5" />
       </div>
     </section>
-
     <section id="page-docs" role="region" aria-labelledby="docs-heading" tabindex="0">
       <h2 id="docs-heading">Metodo de la Secante</h2>
       <div class="container">
@@ -405,7 +426,6 @@
           alt="Imagen 6" />
       </div>
     </section>
-
     <section id="page-contact" role="region" aria-labelledby="contact-heading" tabindex="0">
       <h2 id="contact-heading">Metodo Punto Fijo</h2>
      <div class="container">
@@ -429,10 +449,9 @@
           alt="Imagen 9" />
       </div>
     </section>
-
     <section id="page-example" role="region" aria-labelledby="example-heading" tabindex="0">
       <h2 id="example-heading">Metodo Gauss y Gauss-Jordan</h2>
-      <div class="container">
+       <div class="container">
         <img src="Método de Gauss y Gauss Jordan._page-0002.jpg"
           alt="Imagen 1" />
         <img src="Método de Gauss y Gauss Jordan._page-0003.jpg"
@@ -449,50 +468,44 @@
           alt="Imagen 7" />
       </div>
     </section>
-
   </main>
 
   <script>
-    // Navigation logic to switch sections and update active menu item
+    // Navigation handling
     const menuItems = document.querySelectorAll('ul.menu a[role="menuitem"]');
     const sections = document.querySelectorAll('main section');
 
-    function clearActiveMenu() {
+    function clearActiveMenu(){
       menuItems.forEach(item => {
         item.removeAttribute('aria-current');
         item.tabIndex = -1;
       });
     }
-
-    function clearActiveSections() {
+    function clearActiveSections(){
       sections.forEach(section => {
         section.classList.remove('active');
         section.setAttribute('aria-hidden', 'true');
         section.tabIndex = -1;
       });
     }
-
-    function activateSection(sectionId) {
+    function activateSection(sectionId){
       const section = document.getElementById(sectionId);
-      if (!section) return;
+      if(!section) return;
       section.classList.add('active');
       section.removeAttribute('aria-hidden');
       section.tabIndex = 0;
       section.focus();
     }
-
     menuItems.forEach(item => {
       item.tabIndex = -1;
       item.addEventListener('click', e => {
         e.preventDefault();
         const idMap = {
           'menu-home': 'page-home',
-          'menu-parcial1': 'page-parcial1',
-          'menu-parcial2': 'page-parcial2',
-          'menu-parcial3': 'page-parcial3'
+          'menu-parciales': 'page-parciales'
         };
         const targetSectionId = idMap[item.id];
-        if (targetSectionId) {
+        if(targetSectionId){
           clearActiveMenu();
           clearActiveSections();
           item.setAttribute('aria-current', 'true');
@@ -501,24 +514,20 @@
         }
       });
     });
-
-    // Add click handlers for Parcial method buttons to switch to their pages
     const methodButtons = document.querySelectorAll('.method-buttons button');
     methodButtons.forEach(button => {
       button.addEventListener('click', () => {
         const target = button.getAttribute('data-target');
-        if (!target) return;
+        if(!target) return;
         clearActiveMenu();
         clearActiveSections();
         activateSection(target);
       });
     });
-
-    // Set initial focus and visibility
-    document.getElementById('menu-home').tabIndex = 0;
+    // Initialize
+    document.getElementById('menu-home').tabIndex=0;
     document.getElementById('page-home').setAttribute('aria-hidden', 'false');
   </script>
 
 </body>
 </html>
-
