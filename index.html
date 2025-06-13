@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,7 +26,7 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap');
 
-    /* Reset */
+    /* Reset and base */
     *, *::before, *::after {
       box-sizing: border-box;
     }
@@ -87,6 +87,9 @@
       padding: 0;
       flex-wrap: wrap;
     }
+    ul.menu li {
+      position: relative;
+    }
     ul.menu li a {
       font-weight: 600;
       font-size: 1rem;
@@ -112,7 +115,7 @@
     }
     ul.menu li a:hover::after,
     ul.menu li a:focus::after,
-    ul.menu li a[aria-current="page"]::after {
+    ul.menu li a[aria-current="true"]::after {
       width: 100%;
     }
 
@@ -139,6 +142,7 @@
       font-size: 2rem;
       line-height: 1.4;
       padding: var(--spacing-md);
+      color: var(--color-accent);
     }
 
     /* General Section Headings */
@@ -159,66 +163,40 @@
       display: block;
       margin-left: auto;
       margin-right: auto;
+      margin-bottom: 2rem;
     }
 
-    /* Contact Section Form */
-    form {
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
+    /* Buttons inside Parcial sections for methods */
+    .method-buttons {
       display: flex;
-      flex-direction: column;
-      gap: var(--spacing-md);
-      color: var(--color-text-primary);
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem 2rem;
+      max-width: 800px;
+      margin: 0 auto;
     }
-    label {
-      font-weight: 600;
-      font-size: 1rem;
-      color: var(--color-text-secondary);
-    }
-    input, textarea {
-      margin-top: 0.25rem;
-      padding: 0.75rem 1rem;
-      font-size: 1rem;
-      color: var(--color-text-primary);
-      border: 1.5px solid var(--color-input-border);
-      border-radius: var(--border-radius);
-      background-color: var(--color-input-bg);
-      font-family: var(--font-body);
-      transition: border-color 0.3s ease;
-      resize: vertical;
-    }
-    input:focus, textarea:focus {
-      outline: none;
-      border-color: var(--color-accent);
-      box-shadow: 0 0 6px rgba(17,17,17, 0.25);
-    }
-    textarea {
-      min-height: 120px;
-    }
-    button.submit-btn {
-      align-self: center;
+    .method-buttons button {
       background-color: var(--color-accent);
       color: var(--color-bg);
       border: none;
-      padding: 1rem 3rem;
+      padding: 1rem 2rem;
       font-size: 1.125rem;
       font-weight: 700;
       border-radius: var(--border-radius);
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-      margin-top: var(--spacing-md);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      min-width: 220px;
     }
-    button.submit-btn:hover,
-    button.submit-btn:focus {
+    .method-buttons button:hover,
+    .method-buttons button:focus {
       background-color: var(--color-accent-hover);
       outline: none;
       transform: scale(1.05);
     }
 
     /* Accessibility focus outline */
-    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    a:focus-visible, button:focus-visible {
       outline: 2px solid var(--color-accent);
       outline-offset: 2px;
     }
@@ -237,35 +215,144 @@
       ul.menu {
         gap: 1.25rem;
       }
+      .method-buttons {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .method-buttons button {
+        min-width: 100%;
+      }
     }
-
   </style>
 </head>
 <body>
+  
   <header>
     <nav class="container" aria-label="Primary Navigation">
       <div class="logo" tabindex="0">Metodos Numericos</div>
       <ul class="menu" role="menubar">
-        <li role="none"><a href="#" role="menuitem" tabindex="0" id="menu-home">Inicio</a></li>
-        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-features">Metodo de biseccion</a></li>
-        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-gallery">Metodo Newton-Raphson</a></li>
-        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-docs">Metodo de la Secante</a></li>
-        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-contact">Metodo Punto Fijo</a></li>
-        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-example">Metodo Gauss y Gauss-Jordan</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="0" id="menu-home" aria-current="true">Inicio</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-parcial1">Parcial 1</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-parcial2">Parcial 2</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1" id="menu-parcial3">Parcial 3</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <section id="page-home" class="active" role="region" aria-labelledby="home-heading">
-      <div class="hero container" tabindex="0">
+    <section id="page-home" class="active" role="region" aria-labelledby="home-heading" tabindex="0">
+      <div class="hero container">
         En esta pagina web veremos diferentes tipos de metodos numericos
       </div>
     </section>
 
-    <section id="page-features" role="region" aria-labelledby="features-heading">
-      <h2 id="features-heading">Metodo de biseccion</h2>
+    <section id="page-parcial1" role="region" aria-labelledby="parcial1-heading" tabindex="0">
+      <h2 id="parcial1-heading">Parcial 1</h2>
+      <div class="container method-buttons" role="group" aria-label="Numerical methods in Parcial 1">
+        <button type="button" data-target="page-features">Metodo de biseccion</button>
+        <button type="button" data-target="page-gallery">Metodo Newton-Raphson</button>
+        <button type="button" data-target="page-docs">Metodo de la Secante</button>
+        <button type="button" data-target="page-contact">Metodo Punto Fijo</button>
+        <button type="button" data-target="page-example">Metodo Gauss y Gauss-Jordan</button>
+      </div>
+    </section>
+
+    <section id="page-parcial2" role="region" aria-labelledby="parcial2-heading" tabindex="0">
+      <h2 id="parcial2-heading">Parcial 2</h2>
+      <div class="container method-buttons" role="group" aria-label="Numerical methods in Parcial 2">
+        <button type="button" data-target="page-parcial2-metodo1">Metodo 1 Parcial 2</button>
+        <button type="button" data-target="page-parcial2-metodo2">Metodo 2 Parcial 2</button>
+        <button type="button" data-target="page-parcial2-metodo3">Metodo 3 Parcial 2</button>
+        <button type="button" data-target="page-parcial2-metodo4">Metodo 4 Parcial 2</button>
+        <button type="button" data-target="page-parcial2-metodo5">Metodo 5 Parcial 2</button>
+      </div>
+    </section>
+
+    <section id="page-parcial2-metodo1" role="region" aria-labelledby="parcial2-metodo1-heading" tabindex="0">
+      <h2 id="parcial2-metodo1-heading">Metodo 1 Parcial 2 - Contenido pendiente</h2>
       <div class="container">
+        <p>Contenido del Metodo 1 para Parcial 2 será añadido aquí.</p>
+      </div>
+    </section>
+
+    <section id="page-parcial2-metodo2" role="region" aria-labelledby="parcial2-metodo2-heading" tabindex="0">
+      <h2 id="parcial2-metodo2-heading">Metodo 2 Parcial 2 - Contenido pendiente</h2>
+      <div class="container">
+        <p>Contenido del Metodo 2 para Parcial 2 será añadido aquí.</p>
+      </div>
+    </section>
+
+    <section id="page-parcial2-metodo3" role="region" aria-labelledby="parcial2-metodo3-heading" tabindex="0">
+      <h2 id="parcial2-metodo3-heading">Metodo 3 Parcial 2 - Contenido pendiente</h2>
+      <div class="container">
+        <p>Contenido del Metodo 3 para Parcial 2 será añadido aquí.</p>
+      </div>
+    </section>
+
+    <section id="page-parcial2-metodo4" role="region" aria-labelledby="parcial2-metodo4-heading" tabindex="0">
+      <h2 id="parcial2-metodo4-heading">Metodo 4 Parcial 2 - Contenido pendiente</h2>
+      <div class="container">
+        <p>Contenido del Metodo 4 para Parcial 2 será añadido aquí.</p>
+      </div>
+    </section>
+
+    <section id="page-parcial2-metodo5" role="region" aria-labelledby="parcial2-metodo5-heading" tabindex="0">
+      <h2 id="parcial2-metodo5-heading">Metodo 5 Parcial 2 - Contenido pendiente</h2>
+      <div class="container">
+        <p>Contenido del Metodo 5 para Parcial 2 será añadido aquí.</p>
+      </div>
+    </section>
+
+    <section id="page-parcial3" role="region" aria-labelledby="parcial3-heading" tabindex="0">
+      <h2 id="parcial3-heading">Parcial 3</h2>
+      <div class="container method-buttons" role="group" aria-label="Numerical methods in Parcial 3">
+        <button type="button" data-target="page-parcial3-metodo1">Metodo 1 Parcial 3</button>
+        <button type="button" data-target="page-parcial3-metodo2">Metodo 2 Parcial 3</button>
+        <button type="button" data-target="page-parcial3-metodo3">Metodo 3 Parcial 3</button>
+        <button type="button" data-target="page-parcial3-metodo4">Metodo 4 Parcial 3</button>
+        <button type="button" data-target="page-parcial3-metodo5">Metodo 5 Parcial 3</button>
+      </div>
+    </section>
+
+    <section id="page-parcial3-metodo1" role="region" aria-labelledby="parcial3-metodo1-heading" tabindex="0">
+      <h2 id="parcial3-metodo1-heading">Metodo 1 Parcial 3 - Contenido pendiente</h2>
+      <div class="container">
+        <p>Contenido del Metodo 1 para Parcial 3 será añadido aquí.</p>
+      </div>
+    </section>
+
+    <section id="page-parcial3-metodo2" role="region" aria-labelledby="parcial3-metodo2-heading" tabindex="0">
+      <h2 id="parcial3-metodo2-heading">Metodo 2 Parcial 3 - Contenido pendiente</h2>
+      <div class="container">
+        <p>Contenido del Metodo 2 para Parcial 3 será añadido aquí.</p>
+      </div>
+    </section>
+
+    <section id="page-parcial3-metodo3" role="region" aria-labelledby="parcial3-metodo3-heading" tabindex="0">
+      <h2 id="parcial3-metodo3-heading">Metodo 3 Parcial 3 - Contenido pendiente</h2>
+      <div class="container">
+        <p>Contenido del Metodo 3 para Parcial 3 será añadido aquí.</p>
+      </div>
+    </section>
+
+    <section id="page-parcial3-metodo4" role="region" aria-labelledby="parcial3-metodo4-heading" tabindex="0">
+      <h2 id="parcial3-metodo4-heading">Metodo 4 Parcial 3 - Contenido pendiente</h2>
+      <div class="container">
+        <p>Contenido del Metodo 4 para Parcial 3 será añadido aquí.</p>
+      </div>
+    </section>
+
+    <section id="page-parcial3-metodo5" role="region" aria-labelledby="parcial3-metodo5-heading" tabindex="0">
+      <h2 id="parcial3-metodo5-heading">Metodo 5 Parcial 3 - Contenido pendiente</h2>
+      <div class="container">
+        <p>Contenido del Metodo 5 para Parcial 3 será añadido aquí.</p>
+      </div>
+    </section>
+
+    <!-- Existing Metodo sections from Parcial 1 -->
+    <section id="page-features" role="region" aria-labelledby="features-heading" tabindex="0">
+      <h2 id="features-heading">Metodo de biseccion</h2>
+     <div class="container">
         <img src="Método de Bisección o intervalo medio_page-0002.jpg"
         alt="Imagen 1" />
         <img src="Método de Bisección o intervalo medio_page-0003.jpg"
@@ -285,7 +372,7 @@
       </div>
     </section>
 
-    <section id="page-gallery" role="region" aria-labelledby="gallery-heading">
+    <section id="page-gallery" role="region" aria-labelledby="gallery-heading" tabindex="0">
       <h2 id="gallery-heading">Metodo Newton-Raphson</h2>
       <div class="container">
         <img src="Método Newton - Raphson_page-0002.jpg"
@@ -301,7 +388,7 @@
       </div>
     </section>
 
-    <section id="page-docs" role="region" aria-labelledby="docs-heading">
+    <section id="page-docs" role="region" aria-labelledby="docs-heading" tabindex="0">
       <h2 id="docs-heading">Metodo de la Secante</h2>
       <div class="container">
         <img src="Método de la Secante_page-0002.jpg"
@@ -319,9 +406,9 @@
       </div>
     </section>
 
-    <section id="page-contact" role="region" aria-labelledby="contact-heading">
+    <section id="page-contact" role="region" aria-labelledby="contact-heading" tabindex="0">
       <h2 id="contact-heading">Metodo Punto Fijo</h2>
-      <div class="container">
+     <div class="container">
         <img src="Método de Punto Fijo_page-0002.jpg"
           alt="Imagen 1" />
         <img src="Método de Punto Fijo_page-0003.jpg"
@@ -343,7 +430,7 @@
       </div>
     </section>
 
-    <section id="page-example" role="region" aria-labelledby="example-heading">
+    <section id="page-example" role="region" aria-labelledby="example-heading" tabindex="0">
       <h2 id="example-heading">Metodo Gauss y Gauss-Jordan</h2>
       <div class="container">
         <img src="Método de Gauss y Gauss Jordan._page-0002.jpg"
@@ -362,49 +449,76 @@
           alt="Imagen 7" />
       </div>
     </section>
+
   </main>
 
   <script>
-    (() => {
-      const pages = ['home', 'features', 'gallery', 'docs', 'contact', 'example'];
+    // Navigation logic to switch sections and update active menu item
+    const menuItems = document.querySelectorAll('ul.menu a[role="menuitem"]');
+    const sections = document.querySelectorAll('main section');
 
-      // Cache DOM elements
-      const sections = {};
-      const menuLinks = {};
-
-      pages.forEach(page => {
-        sections[page] = document.getElementById(`page-${page}`);
-        menuLinks[page] = document.getElementById(`menu-${page}`);
+    function clearActiveMenu() {
+      menuItems.forEach(item => {
+        item.removeAttribute('aria-current');
+        item.tabIndex = -1;
       });
+    }
 
-      function showPage(pageToShow) {
-        pages.forEach(page => {
-          if (page === pageToShow) {
-            sections[page].classList.add('active');
-            menuLinks[page].tabIndex = 0;
-            menuLinks[page].setAttribute('aria-current', 'page');
-            // For accessibility, focus main heading or container of the active section
-            const focusTarget = sections[page].querySelector('h1, h2, .hero, img, form, .gallery-placeholder');
-            if (focusTarget) focusTarget.focus();
-          } else {
-            sections[page].classList.remove('active');
-            menuLinks[page].tabIndex = -1;
-            menuLinks[page].removeAttribute('aria-current');
-          }
-        });
-      }
-
-      // Event Listeners on menu items
-      pages.forEach(page => {
-        menuLinks[page].addEventListener('click', e => {
-          e.preventDefault();
-          showPage(page);
-        });
+    function clearActiveSections() {
+      sections.forEach(section => {
+        section.classList.remove('active');
+        section.setAttribute('aria-hidden', 'true');
+        section.tabIndex = -1;
       });
+    }
 
-      // Initialize showing home page
-      showPage('home');
-    })();
+    function activateSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+      section.classList.add('active');
+      section.removeAttribute('aria-hidden');
+      section.tabIndex = 0;
+      section.focus();
+    }
+
+    menuItems.forEach(item => {
+      item.tabIndex = -1;
+      item.addEventListener('click', e => {
+        e.preventDefault();
+        const idMap = {
+          'menu-home': 'page-home',
+          'menu-parcial1': 'page-parcial1',
+          'menu-parcial2': 'page-parcial2',
+          'menu-parcial3': 'page-parcial3'
+        };
+        const targetSectionId = idMap[item.id];
+        if (targetSectionId) {
+          clearActiveMenu();
+          clearActiveSections();
+          item.setAttribute('aria-current', 'true');
+          item.tabIndex = 0;
+          activateSection(targetSectionId);
+        }
+      });
+    });
+
+    // Add click handlers for Parcial method buttons to switch to their pages
+    const methodButtons = document.querySelectorAll('.method-buttons button');
+    methodButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const target = button.getAttribute('data-target');
+        if (!target) return;
+        clearActiveMenu();
+        clearActiveSections();
+        activateSection(target);
+      });
+    });
+
+    // Set initial focus and visibility
+    document.getElementById('menu-home').tabIndex = 0;
+    document.getElementById('page-home').setAttribute('aria-hidden', 'false');
   </script>
+
 </body>
 </html>
+
